@@ -8,25 +8,20 @@ if (btnCalc) {
 
 	btnCalc.addEventListener('click', function (e) {
 
+		e.preventDefault();
+
 		if (validateFields()) {
 
-			let data = {
-				"capital": cap.value,
-				"amt_fees": fees.value,
-				"freq": freq.value,
-				"s_date": date.value.replace(/-/g, '/')
-			}
+			let formData = new FormData(document.getElementById("formu"));
 
-			$.ajax({
-
-				url: "Calcular",
-				type: "post",
-				data: data,
-
-			}).done(function (res) {
-
-				showTable();
-
+			fetch('Calcular', {
+					method: 'POST',
+					body: formData,
+				})
+				.then(response => response.json())
+				.then(res => {
+					console.log(res);
+					showTable();
 			});
 
 		} else {
@@ -46,9 +41,9 @@ if (btnCalc) {
 	fees.addEventListener('blur', validateField);
 }
 
-function validateField(evt){
+function validateField(evt) {
 
-	if(evt.target.value < 1 || isNaN(evt.target.value) || evt.target.value == ''){
+	if (evt.target.value < 1 || isNaN(evt.target.value) || evt.target.value == '') {
 		evt.target.style.borderBottom = '1px solid red';
 	} else {
 		evt.target.style.borderBottom = 'none';
@@ -64,7 +59,7 @@ function validateFields() {
 	let value_freq = freq.value;
 	let value_date = date.value;
 
-	if (value_cap == '' || value_cap == undefined || value_cap == null ) {
+	if (value_cap == '' || value_cap == undefined || value_cap == null) {
 		isValid = false;
 	}
 
@@ -148,6 +143,6 @@ function convertingDate(tdDate, value) {
 
 	let newDate = new Date(year, month - 1, day);
 	newDate.setDate(newDate.getDate() + value);
-	
+
 	return newDate.toLocaleDateString();
 }

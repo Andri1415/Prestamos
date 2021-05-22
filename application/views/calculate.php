@@ -10,17 +10,17 @@
 				</div>
 			</div>
 			<div class="col-xl-6 col-md-6">
-				<form>
+				<form id="formu">
 					<div class="form-group mb-3">
 						<label for="capital">Capital</label>
-						<input type="number" class="form-control form-control-sm" id="capital">
+						<input type="number" name="capital" class="form-control form-control-sm" id="capital">
 					</div>
 					<div class="form-group mb-3">
 						<label for="amount_of_fees">Cantidad de cuotas</label>
-						<input type="number" class="form-control form-control-sm" id="fees">
+						<input type="number" name="amt_fees" class="form-control form-control-sm" id="fees">
 					</div>
 					<div class="form-group mb-3">
-						<select class="custom-select" id="frequency">
+						<select class="custom-select" id="frequency" name="freq">
 							<option >Frecuencia</option>
 							<option value="1">Diario</option>
 							<option value="2">Semanal</option>
@@ -30,7 +30,7 @@
 					</div>
 					<div class="form-group mb-3">
 						<label for="start_date">Fecha de inicio</label>
-						<input type="date" class="form-control" id="start_date">
+						<input type="date" name="s_date" class="form-control" id="start_date">
 					</div>
 					<button type="button" id="calculate" class="btn btn-primary">Calcular</button>
 				</form>
