@@ -23,12 +23,12 @@ class Calculate extends CI_Controller
 
 	public function Save()
 	{
-		$capital = $this
+		$capital = json_decode($this
 			->input
-			->post('capital');
-		$amt_fees = $this
+			->post('capital'));
+		$amt_fees = json_decode($this
 			->input
-			->post('amt_fees');
+			->post('amt_fees'), true);
 		$freq = $this
 			->input
 			->post('freq');

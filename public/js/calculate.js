@@ -15,14 +15,13 @@ if (btnCalc) {
 			let formData = new FormData(document.getElementById("formu"));
 
 			fetch('Calcular', {
-					method: 'POST',
-					body: formData,
-				})
-				.then(response => response.json())
-				.then(res => {
-					console.log(res);
-					showTable();
-			});
+				method: 'POST',
+				body: formData,
+			})
+			.then(response => response.json())
+			.then(res => {
+				showTable();
+			}).catch(error => console.log(error))
 
 		} else {
 
@@ -63,7 +62,7 @@ function validateFields() {
 		isValid = false;
 	}
 
-	if (value_fees == '' || value_fees == undefined || value_fees == null) {
+	if (value_fees == '' || value_fees == undefined || value_fees == null || value_fees == 0) {
 		isValid = false;
 	}
 
@@ -104,45 +103,25 @@ function createFee(value) {
 
 	let myDate = new Date(date.value.replace(/-/g, '/'));
 
-	let amount_of_fee = cap.value / fees.value;
+	const feess = fees.value;
+
+	let amount_of_fee = cap.value / feess;
 
 	let table = document.getElementById('body-loan');
 
 	table.innerHTML = '';
 
-	table.innerHTML = `
-	<tr>
-		<td>1</td>
-		<td>${myDate.toLocaleDateString()}</td>
-		<td>${amount_of_fee}</td>
-	</tr>`;
-
-	for (let i = 2; i <= fees.value; i++) {
-
-		let tdDate = table.lastElementChild.children[1].textContent;
+	for (let i = 1; i <= feess; i++) {
 
 		let bloc = `
 			<tr>
 				<td>${i}</td>
-				<td>${convertingDate(tdDate,value)}</td>
-				<td>${amount_of_fee}</td>
+				<td>${myDate.toLocaleDateString()}</td>
+				<td>${amount_of_fee.toFixed(2)}</td>
 			</tr>`;
 
 		table.innerHTML += bloc;
+
+		myDate.setDate(myDate.getDate() + value);
 	}
-}
-
-function convertingDate(tdDate, value) {
-
-	let delim1 = tdDate.indexOf("/");
-	let delim2 = tdDate.lastIndexOf("/");
-
-	let day = parseInt(tdDate.substring(0, delim1), 10);
-	let month = parseInt(tdDate.substring(delim1 + 1, delim2), 10);
-	let year = parseInt(tdDate.substring(delim2 + 1), 10);
-
-	let newDate = new Date(year, month - 1, day);
-	newDate.setDate(newDate.getDate() + value);
-
-	return newDate.toLocaleDateString();
 }
